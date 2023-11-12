@@ -25,6 +25,7 @@
 		9669AF4D2AFFF7D300A54049 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9669AF4C2AFFF7D300A54049 /* HomeViewModel.swift */; };
 		9669AF512B0067B400A54049 /* NavigationLazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9669AF502B0067B400A54049 /* NavigationLazyView.swift */; };
 		9669AF572B006FD100A54049 /* CounterComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9669AF562B006FD100A54049 /* CounterComponent.swift */; };
+		9669AF5A2B00E32100A54049 /* NavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9669AF592B00E32100A54049 /* NavigationViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		9669AF502B0067B400A54049 /* NavigationLazyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationLazyView.swift; sourceTree = "<group>"; };
 		9669AF562B006FD100A54049 /* CounterComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterComponent.swift; sourceTree = "<group>"; };
 		9669AF582B00749F00A54049 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		9669AF592B00E32100A54049 /* NavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 		9669AF142AFFF23B00A54049 /* app */ = {
 			isa = PBXGroup;
 			children = (
+				9669AF592B00E32100A54049 /* NavigationViewModel.swift */,
 				9669AF042AFFF21800A54049 /* SwiftUITestApp.swift */,
 				9669AF4F2B0067A900A54049 /* Core */,
 				9669AF2A2AFFF2D600A54049 /* Utils */,
@@ -233,8 +236,8 @@
 		9669AF442AFFF50A00A54049 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				9669AF472AFFF54800A54049 /* HomeFooterComponent.swift */,
 				9669AF492AFFF6F700A54049 /* HomeBodyComponent.swift */,
+				9669AF472AFFF54800A54049 /* HomeFooterComponent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -360,6 +363,7 @@
 				9669AF482AFFF54800A54049 /* HomeFooterComponent.swift in Sources */,
 				9669AF512B0067B400A54049 /* NavigationLazyView.swift in Sources */,
 				9669AF2C2AFFF2DF00A54049 /* printIfDebug.swift in Sources */,
+				9669AF5A2B00E32100A54049 /* NavigationViewModel.swift in Sources */,
 				9669AF4D2AFFF7D300A54049 /* HomeViewModel.swift in Sources */,
 				9669AF362AFFF39C00A54049 /* App2FirstPage.swift in Sources */,
 				9669AF3C2AFFF3C100A54049 /* App2SecondViewModel.swift in Sources */,

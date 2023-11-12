@@ -10,6 +10,8 @@ import SwiftUI
 struct HomeBodyComponent: View {
     private let id: UUID
     
+    @ObservedObject var navigationViewModel: NavigationViewModel
+    
     @Binding var selectedTabItem: HomeTabItem
     @State var counter: Int
     
@@ -18,10 +20,13 @@ struct HomeBodyComponent: View {
     
     init(
         id: UUID = UUID(),
+        navigationViewModel: NavigationViewModel,
         selectedTabItem: Binding<HomeTabItem>,
         counter: Int = 0
     ) {
         self.id = id
+        
+        self.navigationViewModel = navigationViewModel
         
         self._selectedTabItem = selectedTabItem
         self._counter = State(wrappedValue: counter)
@@ -39,11 +44,13 @@ struct HomeBodyComponent: View {
             switch selectedTabItem {
             case .App1:
                 App1FirstPage(
+                    navigationViewModel: navigationViewModel,
                     viewModel: app1FirstViewModel,
                     counter: $counter
                 )
             case .App2:
                 App2FirstPage(
+                    navigationViewModel: navigationViewModel,
                     viewModel: app2FirstViewModel,
                     counter: $counter
                 )
@@ -54,11 +61,14 @@ struct HomeBodyComponent: View {
 
 #Preview {
     struct Container: View {
+        @StateObject var navigationViewModel = NavigationViewModel()
+        
         @State var selectedTabItem: HomeTabItem = .App1
         
         var body: some View {
             NavigationStack {
                 HomeBodyComponent(
+                    navigationViewModel: navigationViewModel,
                     selectedTabItem: $selectedTabItem
                 )
             }

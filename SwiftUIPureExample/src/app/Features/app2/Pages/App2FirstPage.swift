@@ -7,20 +7,30 @@
 
 import SwiftUI
 
+enum App2FirstRoute {
+    case App2SecondPage
+}
+
 struct App2FirstPage: View {
     typealias ViewModel = App2FirstViewModel
     
     private let id: UUID
     
+    @ObservedObject var navigationViewModel: NavigationViewModel
+    
     @ObservedObject var viewModel: ViewModel
     @Binding var counter: Int
     
+    @StateObject var app2SecondViewModel = App2SecondViewModel()
+    
     init(
         id: UUID = UUID(),
+        navigationViewModel: NavigationViewModel,
         viewModel: ViewModel,
         counter: Binding<Int>
     ) {
         self.id = id
+        self.navigationViewModel = navigationViewModel
         self.viewModel = viewModel
         self._counter = counter
         
@@ -41,13 +51,8 @@ struct App2FirstPage: View {
                 ) {
                     Text("App2FirstPage")
                     
-                    NavigationLink {
-                        NavigationLazyView(
-                            build: App2SecondPage(
-                                viewModel: App2SecondViewModel(),
-                                counter: $counter
-                            )
-                        )
+                    Button {
+                        navigationViewModel.path.append(App2FirstRoute.App2SecondPage)
                     } label: {
                         Text("Go to App2SecondPage")
                     }
@@ -60,6 +65,16 @@ struct App2FirstPage: View {
             
             Spacer()
         }
+        .navigationDestination(for: App2FirstRoute.self) { value in
+            switch value {
+            case .App2SecondPage:
+                App2SecondPage(
+                    navigationViewModel: navigationViewModel,
+                    viewModel: app2SecondViewModel,
+                    counter: $counter
+                )
+            }
+        }
         .onAppear {
             printIfDebug("\(type(of: self)) onAppear \(id)")
         }
@@ -71,11 +86,14 @@ struct App2FirstPage: View {
 
 #Preview {
     struct Container: View {
+        @StateObject var navigationViewModel = NavigationViewModel()
+        
         @State var counter: Int = 0
         
         var body: some View {
             NavigationStack {
                 App2FirstPage(
+                    navigationViewModel: navigationViewModel,
                     viewModel: App2FirstViewModel(),
                     counter: $counter
                 )

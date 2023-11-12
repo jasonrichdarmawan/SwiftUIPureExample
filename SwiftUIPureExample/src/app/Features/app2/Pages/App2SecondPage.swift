@@ -7,21 +7,30 @@
 
 import SwiftUI
 
+enum App2SecondRoute {
+    case App1FirstPage
+}
+
 struct App2SecondPage: View {
     typealias ViewModel = App2SecondViewModel
     
     private let id: UUID
     
+    @ObservedObject var navigationViewModel: NavigationViewModel
     @ObservedObject var viewModel: ViewModel
     
     @Binding var counter: Int
     
+    @StateObject var app1FirstViewModel = App1FirstViewModel()
+    
     init(
         id: UUID = UUID(),
+        navigationViewModel: NavigationViewModel,
         viewModel: ViewModel,
         counter: Binding<Int>
     ) {
         self.id = id
+        self.navigationViewModel = navigationViewModel
         self.viewModel = viewModel
         self._counter = counter
         
@@ -41,13 +50,8 @@ struct App2SecondPage: View {
                 ) {
                     Text("App2SecondPage")
                     
-                    NavigationLink {
-                        NavigationLazyView(
-                            build: App1FirstPage(
-                                viewModel: App1FirstViewModel(),
-                                counter: $counter
-                            )
-                        )
+                    Button {
+                        navigationViewModel.path.append(App2SecondRoute.App1FirstPage)
                     } label: {
                         Text("Go to App2FirstPage")
                     }
@@ -57,6 +61,16 @@ struct App2SecondPage: View {
             }
             
             Spacer()
+        }
+        .navigationDestination(for: App2SecondRoute.self) { value in
+            switch value {
+            case .App1FirstPage:
+                App1FirstPage(
+                    navigationViewModel: navigationViewModel,
+                    viewModel: app1FirstViewModel,
+                    counter: $counter
+                )
+            }
         }
         .onAppear {
             printIfDebug("\(type(of: self)) onAppear \(id)")
@@ -69,12 +83,16 @@ struct App2SecondPage: View {
 
 #Preview {
     struct Container: View {
+        @StateObject var navigationViewModel = NavigationViewModel()
+        @StateObject var viewModel = App2SecondViewModel()
+        
         @State var counter = 0
         
         var body: some View {
             NavigationStack {
                 App2SecondPage(
-                    viewModel: App2SecondViewModel(),
+                    navigationViewModel: navigationViewModel,
+                    viewModel: viewModel,
                     counter: $counter
                 )
             }

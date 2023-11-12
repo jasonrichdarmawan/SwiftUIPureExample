@@ -9,13 +9,13 @@ import SwiftUI
 
 @main
 struct SwiftUITestApp: App {
-    @StateObject var homeViewModel = HomeViewModel(
-        selectedTabItem: .App1
-    )
+    @StateObject var homeViewModel = HomeViewModel()
+    @StateObject var navigationviewModel = NavigationViewModel()
     
     var body: some Scene {
         WindowGroup {
             HomePage(
+                navigationViewModel: navigationviewModel,
                 viewModel: homeViewModel
             )
         }
