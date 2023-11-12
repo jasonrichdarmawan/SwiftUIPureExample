@@ -5,13 +5,15 @@ I want to check whether SwiftUI's navigation and view works well.
     Works well definition:
     - [ ] No memory leak.
     
-        If we do not use `NavigationStack(path:,root:)`, there will be no memory leak.
+        if we use `NavigationStack(path:,root:)`
         ```
         struct App1FirstPage: View {
+            @StateObject app1SecondViewModel = App1SecondViewModel()
+        
             var body: some View {
                 NavigationStack {
                     NavigationLink {
-                        App1SecondPage()
+                        App1SecondPage(viewModel: app1SecondViewModel)
                     } label: {
                         Text("Go to App1SecondPage")
                     }
@@ -19,18 +21,8 @@ I want to check whether SwiftUI's navigation and view works well.
             }
         }
         ```
-    
-        But there will be unnecessary initialization.
-    
-        How to reproduce:
-        1. HomePage -> navigate to 2
-        2. App1FirstPage -> navigate to 3
-        3. App1SecondPage -> navigate to 4
-        4. App2FirstPage -> change the counter's value
         
-        It will initialize App1SecondPage and App1SecondViewModel everytime I change the counter's value.
-        
-        If we use `NavigationStack(path:root:)`, there will be memory leak.
+        if we use `NavigationStack(path:root:)`
         ```
         enum App1FirstRoute {
             case App1SecondPage
@@ -61,13 +53,16 @@ I want to check whether SwiftUI's navigation and view works well.
             }
         }
         ```
-        
+    
+        But there will be unnecessary initialization.
+    
         How to reproduce:
         1. HomePage -> navigate to 2
         2. App1FirstPage -> navigate to 3
         3. App1SecondPage -> navigate to 4
+        4. App2FirstPage -> change the counter's value
         
-        It will initialize App1FirstViewModel and cause memory leak.
+        It will initialize App1SecondPage and App1SecondViewModel everytime I change the counter's value.
         
     - [ ] No coupling betweeen views.
 
