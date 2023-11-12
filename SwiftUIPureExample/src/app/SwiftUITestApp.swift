@@ -9,9 +9,15 @@ import SwiftUI
 
 @main
 struct SwiftUITestApp: App {
+    @StateObject var homeViewModel = HomeViewModel(
+        selectedTabItem: .App1
+    )
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomePage(
+                viewModel: homeViewModel
+            )
         }
     }
 }
